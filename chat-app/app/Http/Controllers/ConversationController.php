@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Conversation;
 use Illuminate\Http\Request;
+use App\Http\Resources\ConversationResouce;
 
 class ConversationController extends Controller
 {
@@ -15,7 +16,10 @@ class ConversationController extends Controller
     public function index()
     {
         $conversation=Conversation::all();
-        return $conversation;
+    //    return   new ConversationResouce($conversation[0]);
+        // return  $conversation[0]->messages;
+       return  ConversationResouce::collection($conversation);
+         
     }
 
     /**

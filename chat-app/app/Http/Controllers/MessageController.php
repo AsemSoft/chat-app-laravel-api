@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use Illuminate\Http\Request;
+use App\Http\Resources\MessageResource;
+use App\Http\Requests\storeMessageRequest;
 
 class MessageController extends Controller
 {
@@ -33,9 +35,18 @@ class MessageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(storeMessageRequest $request)
     {
-        //
+        //  return $request;
+        $message = new Message();
+        $message->body = $request['body'];
+        // $message->body = $request->body;
+        $message->read = false;
+        $message->user_id = 1;
+        $message->conversation_id = $request['conversation_id'];
+        // $message->conversation_id = 1;
+        $message->save();
+        return new MessageResource($message);
     }
 
     /**
